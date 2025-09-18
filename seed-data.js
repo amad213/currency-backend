@@ -3,13 +3,14 @@ import ExchangeRate from "./models/ExchangeRate.js";
 import User from "./models/User.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
+import { connectDB } from "./db-config.js";
 
 dotenv.config();
 
 const seedData = async () => {
   try {
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGO_URI || "mongodb://localhost:27017/currency-exchange");
+    await connectDB();
     console.log("✅ Connected to MongoDB");
 
     // Clear existing data

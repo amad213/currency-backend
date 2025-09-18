@@ -5,7 +5,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import userDetailsRoutes from "./routes/userDetails.js";
 import authRoutes from "./routes/auth.js";
- 
+import transactionRoutes from "./routes/transaction.js";
 
 import adminRoutes from "./routes/admin.js";
 import exchangeRoutes from "./routes/exchange.js"; // 👈 import
@@ -15,22 +15,21 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+connectDB();
 
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/details", userDetailsRoutes);
 app.use("/api/exchange", exchangeRoutes);
- 
+app.use("/api/transactions", transactionRoutes);
 app.get("/", (req, res) => res.send("🚀 API is running..."));
 
 // MongoDB Connect
+import { connectDB } from './db-config.js';
 
-mongoose
-  .connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+// Connect to in-memory MongoDB
+connectDB()
   .then(() => console.log("✅ MongoDB Connected"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
